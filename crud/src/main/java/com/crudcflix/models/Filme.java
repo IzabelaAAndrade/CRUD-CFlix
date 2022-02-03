@@ -1,10 +1,8 @@
 package com.crudcflix.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,20 +13,33 @@ public class Filme implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @NotBlank
-    private String codigo;
+    @NotNull
+    private long codigo;
+
+
     @NotBlank
     private String nome;
-    @NotBlank
-    private Date dt_lancamento;
-    @NotBlank
-    private String descricao;
+    @NotNull
+    private String dt_lancamento;
 
-    public String getCodigo() {
+    private String descricao;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] imagem;
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+
+    public long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(long codigo) {
         this.codigo = codigo;
     }
 
@@ -40,11 +51,11 @@ public class Filme implements Serializable {
         this.nome = nome;
     }
 
-    public Date getDt_lancamento() {
+    public String getDt_lancamento() {
         return dt_lancamento;
     }
 
-    public void setDt_lancamento(Date dt_lancamento) {
+    public void setDt_lancamento(String dt_lancamento) {
         this.dt_lancamento = dt_lancamento;
     }
 

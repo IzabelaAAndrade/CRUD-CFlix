@@ -18,10 +18,11 @@
         <h1>Cadastro de Filmes:</h1>
         <a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">assignment</i>Visualizar Eventos Cadastrados</a>
         <div class="container">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 Nome:  <input type="text" value="" name="nome"/>
                 Data de Lançamento:  <input type="date" value="" name="dt_lancamento"/>
-                Descricao:  <input type="textarea" value="" name="dt_lancamento"/>
+                Descricao:  <input type="text" value="" name="descricao"/>
+                Fotas do Filme: <input type="file" value="" name="imagemFilme" accept="image/*">
                 <button class="waves-effect waves-light btn" type="submit">Salvar</button>
             </form>
             <th:block th:include="mensagemValidacao"></th:block>
