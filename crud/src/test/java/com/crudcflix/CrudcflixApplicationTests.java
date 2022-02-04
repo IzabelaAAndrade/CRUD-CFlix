@@ -1,4 +1,4 @@
-package com.crudcflix.eventosapp;
+package com.crudcflix;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CrudcflixApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void conexaoTeste() {
+        Connection conexao;
+        conexao =
     }
 
 }
