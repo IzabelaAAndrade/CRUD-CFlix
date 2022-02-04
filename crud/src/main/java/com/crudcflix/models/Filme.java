@@ -17,7 +17,6 @@ public class Filme implements Serializable {
     @NotNull
     private long codigo;
 
-
     @NotBlank
     private String nome;
     @NotNull
