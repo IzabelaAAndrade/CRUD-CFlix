@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="materialize/css/materialize-min.css"  media="screen,projection"/>
-
+        <link href="materialize/css/ajustes.css" rel="stylesheet"/>
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -15,15 +15,24 @@
         <title>CultFlix | Cadastrar Filme</title>
     </head>
     <body>
-        <h1>Cadastro de Filmes:</h1>
-        <a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">assignment</i>Visualizar Eventos Cadastrados</a>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/index" class="brand-logo">CFlix</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/cadastrarFilme">Cadastrar Filmes</a></li>
+                </ul>
+            </div>
+        </nav>
+        <h3 class="t-center">Cadastro de Filmes:</h3>
         <div class="container">
             <form method="post" enctype="multipart/form-data">
                 Nome:  <input type="text" value="" name="nome"/>
                 Data de Lançamento:  <input type="date" value="" name="dt_lancamento"/>
                 Descricao:  <input type="text" value="" name="descricao"/>
-                Fotas do Filme: <input type="file" value="" name="imagemFilme" accept="image/*">
-                <button class="waves-effect waves-light btn" type="submit">Salvar</button>
+                Foto Representativa: <input type="file" value="" name="imagemFilme" maxlength="215" accept="image/*"/>
+                <button class="btn waves-effect waves-light colorir" type="submit" name="action">Salvar
+                    <i class="material-icons right">send</i>
+                </button>
             </form>
             <th:block th:include="mensagemValidacao"></th:block>
         </div>

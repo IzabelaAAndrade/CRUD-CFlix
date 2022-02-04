@@ -23,8 +23,8 @@ public class Evento implements Serializable {
     @NotBlank
     private String horario;
 
-    @OneToMany
-    private List<Convidado> convidados;
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
 
     public long getCodigo() {
         return codigo;

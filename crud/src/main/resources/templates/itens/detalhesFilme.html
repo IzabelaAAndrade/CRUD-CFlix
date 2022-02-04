@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize-min.css"  media="screen,projection"/>
+    <link href="materialize/css/ajustes.css" rel="stylesheet"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Other Configuration Aspects-->
+    <meta charset="UTF-8">
+    <title>CultFlix | Detalhes Filme</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/index" class="brand-logo">CFlix</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/cadastrarFilme">Cadastrar Filmes</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div th:each="filme: ${filme}">
+            <h3 class="t-center"><span th:text="${filme.nome}"></span></h3>
+            <img class="alinhamento ajuste-img" height="200" th:src="|/imagem/${filme.codigo}|">
+            <h4>Ficha Técnica: </h4>
+            <p> <span class="colorir-tx negrito">Nome:</span> <span th:text="${filme.nome}"></span></p>
+            <p> <span class="colorir-tx negrito">Data de Lançamento:</span> <span th:text="${filme.dt_lancamento}"></span></p>
+            <p> <span class="colorir-tx negrito">Descrição:</span> <span th:text="${filme.descricao}"></span></p>
+            <button  class="btn waves-effect waves-light colorir" type="submit" name="action">Deletar Filme
+                <a th:href="${(#mvc.url('FC#deletarFilme').arg(0, filme.codigo)).build()}"><i class="material-icons right">delete</i></a>
+            </button>
+        </div>
+
+        <h4 class="add-margem">Adicionar Comentário</h4>
+        <form method="POST">
+            Nome: <input type="text" value="" name="nome" placeholder="Digite seu nome"/>
+            Comentário: <input type="text" value="" name="descricao" placeholder="Seu comentário sobre o filme..."/>
+            <button class="btn waves-effect waves-light colorir" type="submit" name="action">Adicionar Comentário
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+        <th:block th:include="mensagemValidacao"></th:block>
+        <h3 class="t-center">Comentários:</h3>
+        <div>
+            <ul class="collection">
+                <li th:each="comentario : ${comentarios}" class="collection-item avatar">
+                    <img src="materialize/imgs/kitty.jpg" alt="" class="circle">
+                    <span th:text="${comentario.nome}" class="negrito title"></span>
+                    <p><span th:text="${comentario.descricao}"></span></p>
+                    <a th:href="${(#mvc.url('FC#deletarComentario').arg(0, comentario.cd)).build()}" class="secondary-content"><i class="ajustar-links material-icons">delete</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="materialize/js/materialize-min.js"></script>
+</body>
+</html>

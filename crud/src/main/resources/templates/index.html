@@ -6,26 +6,44 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize-min.css"  media="screen,projection"/>
-
+    <link href="materialize/css/ajustes.css" rel="stylesheet"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!--Other Configuration Aspects-->
     <meta charset="UTF-8">
-    <title>CultFlix | Cadastrar Filme</title>
+    <title>CultFlix | Filmes Cadastrados</title>
 </head>
 <body>
-<h1>Cadastro de Filmes:</h1>
-<a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">assignment</i>Visualizar Eventos Cadastrados</a>
+<nav>
+    <div class="nav-wrapper">
+        <a href="/index" class="brand-logo">CFlix</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/cadastrarFilme">Cadastrar Filmes</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
-    <form method="post" enctype="multipart/form-data">
-        Nome:  <input type="text" value="" name="nome"/>
-        Data de Lançamento:  <input type="date" value="" name="dt_lancamento"/>
-        Descricao:  <input type="text" value="" name="descricao"/>
-        Fotas do Filme: <input type="file" value="" name="imagemFilme" accept="image/*">
-        <button class="waves-effect waves-light btn" type="submit">Salvar</button>
-    </form>
-    <th:block th:include="mensagemValidacao"></th:block>
+    <h3 class="t-center">Filmes Cadastrados:</h3>
+    <div class="container">
+            <div class="row">
+                <div th:each="filme: ${filmes}" class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class="ajuste-img" height="200" th:src="|/imagem/${filme.codigo}|">
+                            <span class="card-title" th:text="${filme.nome}"></span>
+                        </div>
+                        <div class="card-content">
+                            <p class="ajuste-tamanho"><span th:text="${filme.descricao}"></span></p>
+                        </div>
+                        <div class="card-action">
+                            <a th:href="${(#mvc.url('FC#detalhesFilme').arg(0, filme.codigo)).build()}"><span>Ver mais...</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
 </div>
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

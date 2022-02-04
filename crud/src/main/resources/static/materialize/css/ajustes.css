@@ -1,0 +1,53 @@
+.container-filme{
+    display: flex;
+    flex-direction: row;
+}
+
+.ajuste-tamanho{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.alinhamento{
+    float: left;
+    margin-right: 2%;
+}
+
+#cabecalho{
+    width: 100%;
+    background-color: #ff005a;
+}
+
+.t-center{
+    text-align: center;
+    color: #ee6e73;
+}
+
+.colorir{
+    background-color: #ee6e73;
+}
+
+.ajuste-img{
+    object-fit: cover;
+}
+
+.colorir-tx{
+    color: #ee6e73;
+}
+
+.negrito{
+    font-weight: bold;
+}
+
+.add-margem{
+    margin-top: 2%;
+}
+.ajustar-links{
+    color: black;
+    text-decoration: none;
+}
+a{
+    color: black;
+    text-decoration: none;
+}

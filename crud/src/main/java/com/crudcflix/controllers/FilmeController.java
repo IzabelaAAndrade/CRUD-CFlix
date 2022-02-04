@@ -1,14 +1,13 @@
 package com.crudcflix.controllers;
 
+import com.crudcflix.models.Comentario;
 import com.crudcflix.models.Filme;
+import com.crudcflix.repository.ComentarioRepository;
 import com.crudcflix.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,6 +20,9 @@ public class FilmeController {
 
     @Autowired
     FilmeRepository fr;
+
+    @Autowired
+    ComentarioRepository cr;
 
     @RequestMapping(value="/cadastrarFilme", method= RequestMethod.GET)
     public String form(){
@@ -47,24 +49,62 @@ public class FilmeController {
     public ModelAndView listarEventos(){
         ModelAndView mv = new ModelAndView("index");
         Iterable<Filme> filmesCadastrados = fr.findAll();
-        mv.addObject("filme", filmesCadastrados);
+        mv.addObject("filmes", filmesCadastrados);
 
         return mv;
     }
 
-    /*
+
     @RequestMapping(value="/{codigo}", method=RequestMethod.GET)
-    public ModelAndView detalhesEvento(@PathVariable("codigo") long codigo){
-        ModelAndView mv = new ModelAndView("detalhesFilme");
+    public ModelAndView detalhesFilme(@PathVariable("codigo") long codigo){
+        ModelAndView mv = new ModelAndView("itens/detalhesFilme");
         Filme filme = fr.findByCodigo(codigo);
-        Iterable<Convidado> convidados = cr.findByEvento(evento);
+        Iterable<Comentario> comentarios = cr.findByFilme(filme);
 
-        mv.addObject("evento", evento);
-        mv.addObject("convidados", convidados);
+        mv.addObject("filme", filme);
+        mv.addObject("comentarios", comentarios);
         return mv;
     }
 
-     */
+    @RequestMapping("/deletarFilme")
+    public String deletarFilme(long codigo){
+        Filme filme = fr.findByCodigo(codigo);
+        fr.delete(filme);
+        return "redirect:/index";
+    }
+
+    @RequestMapping(value="/{codigo}", method=RequestMethod.POST)
+    public String detalhesFilmePost(@PathVariable("codigo") long codigo , @Valid Comentario comentario, BindingResult result, RedirectAttributes attributes){
+        if(result.hasErrors()){
+            attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+        }
+        Filme filme = fr.findByCodigo(codigo);
+        comentario.setFilme(filme);
+        cr.save(comentario);
+        attributes.addFlashAttribute("mensagem", "Comentário adicionado com sucesso!");
+        return "redirect:/{codigo}";
+    }
+
+    @RequestMapping("/deletarComentario")
+    public String deletarComentario(long cd){
+        Comentario comentario = cr.findByCd(cd);
+        cr.delete(comentario);
+
+        Filme filme = comentario.getFilme();
+        long codigoLong = filme.getCodigo();
+        String codigo = "" + codigoLong;
+
+        return "redirect:/" + codigo;
+    }
+
+    @GetMapping("/imagem/{codigo}")
+    @ResponseBody
+    public byte[] exibirImagem(@PathVariable("codigo") long codigo){
+        Filme filme = this.fr.findByCodigo(codigo);
+        return filme.getImagem();
+    }
+
+
 
 
 }

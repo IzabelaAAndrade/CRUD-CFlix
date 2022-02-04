@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Filme implements Serializable {
@@ -21,8 +22,12 @@ public class Filme implements Serializable {
     private String nome;
     @NotNull
     private String dt_lancamento;
-
+    @NotBlank
     private String descricao;
+
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] imagem;
