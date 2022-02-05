@@ -14,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 @SpringBootTest()
 @WebAppConfiguration
@@ -41,14 +43,6 @@ public class CrudcflixApplicationTests {
     @Test
     public void testeConsulta() {
 
-        Filme filmeTeste = new Filme();
-
-        filmeTeste.setNome("The K2");
-        filmeTeste.setDt_lancamento("23/09/2016");
-        filmeTeste.setDescricao("The K2 é uma telenovela sul-coreana exibida pelo canal tvN de 23 de setembro a 12 de novembro de 2016, estrelada por Ji Chang-wook, Song Yoon-ah, Im Yoon-ah e Jo Sung-ha\n");
-
-        fr.save(filmeTeste);
-
         Filme filmeBuscado = fr.findByNome("The K2");
 
         Assertions.assertThat(filmeBuscado.getNome()).isEqualTo("The K2");
@@ -59,47 +53,27 @@ public class CrudcflixApplicationTests {
 
         Filme filmeTeste = new Filme();
 
-        filmeTeste.setNome("The K2");
-        filmeTeste.setDt_lancamento("23/09/2016");
-        filmeTeste.setDescricao("The K2 é uma telenovela sul-coreana exibida pelo canal tvN de 23 de setembro a 12 de novembro de 2016, estrelada por Ji Chang-wook, Song Yoon-ah, Im Yoon-ah e Jo Sung-ha\n");
+        filmeTeste.setNome("Lala land");
+        filmeTeste.setDt_lancamento("23/mm/aaaa");
+        filmeTeste.setDescricao("Não é kdrama\n");
 
         fr.save(filmeTeste);
 
-        Filme filmeBuscado = fr.findByNome("The K2");
+        Filme filmeBuscado = fr.findByNome("Lala land");
 
-        Assertions.assertThat(filmeBuscado.getNome()).isEqualTo("The K2");
-    }
-
-    @Test
-    public void testeAtualizacao() {
-
-        Filme filmeTeste = new Filme();
-
-        filmeTeste.setNome("The K2");
-        filmeTeste.setDt_lancamento("23/09/2016");
-        filmeTeste.setDescricao("The K2 é uma telenovela sul-coreana exibida pelo canal tvN de 23 de setembro a 12 de novembro de 2016, estrelada por Ji Chang-wook, Song Yoon-ah, Im Yoon-ah e Jo Sung-ha\n");
-
-        fr.save(filmeTeste);
-
-        Filme filmeBuscado = fr.findByNome("The K2");
-
-        Assertions.assertThat(filmeBuscado.getNome()).isEqualTo("The K2");
+        Assertions.assertThat(filmeBuscado.getNome()).isNotEqualTo("Lala land");
     }
 
     @Test
     public void testeExclusao() {
 
-        Filme filmeTeste = new Filme();
+        Filme filmeBuscado = fr.findByNome("Goblin");
 
-        filmeTeste.setNome("The K2");
-        filmeTeste.setDt_lancamento("23/09/2016");
-        filmeTeste.setDescricao("The K2 é uma telenovela sul-coreana exibida pelo canal tvN de 23 de setembro a 12 de novembro de 2016, estrelada por Ji Chang-wook, Song Yoon-ah, Im Yoon-ah e Jo Sung-ha\n");
+        fr.delete(filmeBuscado);
 
-        fr.save(filmeTeste);
+        filmeBuscado = fr.findByNome("Goblin");
 
-        Filme filmeBuscado = fr.findByNome("The K2");
-
-        Assertions.assertThat(filmeBuscado.getNome()).isEqualTo("The K2");
+        Assertions.assertThat(filmeBuscado).isNull();
     }
 
 }
